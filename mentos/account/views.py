@@ -7,7 +7,7 @@ from .models import *
 from contest.models import *
 from django.core.paginator import Paginator
 import json
-from .mbti import question, option1, option2
+from .mbti import intro, question, option1, option2
 
 # Create your views here.
 def signup(request):
@@ -39,7 +39,7 @@ def signup(request):
             profile.email = email
             # mbti 검사 페이지로 이동
             if mbti == '모름':
-                return render(request, 'mbti.html', {'user': user, 'profile': profile, 'question': json.dumps(question), 'option1': json.dumps(option1), 'option2': json.dumps(option2)})
+                return render(request, 'mbti.html', {'user': user, 'profile': profile, 'intro': json.dumps(intro), 'question': json.dumps(question), 'option1': json.dumps(option1), 'option2': json.dumps(option2)})
             # home으로 이동
             else:
                 profile.mbti = mbti
@@ -78,6 +78,13 @@ def result(request):
     )
     auth.login(request,user)
     return render(request, 'result.html', {'profile': profile})
+
+def only_mbti(request):
+    return render(request, 'only_mbti.html', {'intro': json.dumps(intro), 'question': json.dumps(question), 'option1': json.dumps(option1), 'option2': json.dumps(option2)})
+
+def only_result(request):
+    mbti = request.POST['result']
+    return render(request, 'only_result.html', {'mbti': mbti})
 
 def login(request):
     if request.method =="POST":

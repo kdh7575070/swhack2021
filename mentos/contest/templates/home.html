@@ -11,15 +11,19 @@
         display: flex;
     }
 
-    #mbti {
-        width: 100%;
-        height: 100%;
-        margin-bottom: 4rem;
-        object-fit: contain;
+    .carrage {
+        padding-left: 5rem;
+        padding-right: 5rem;
+        padding-top: 5rem;
     }
 
     .col-3 {
         margin: 10px 0px;
+    }
+
+    .container {
+        position: relative;
+        z-index: 2;
     }
 
     @import url(https://fonts.googleapis.com/css?family=Raleway:400,500,800);
@@ -160,15 +164,127 @@
     {% else %}
     <script>alert("로그인 후 서비스를 이용하실 수 있습니다");</script>
     {% endif %}
+    <div class="carrage">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <a href="{% url 'only_mbti' %}">
+                        <img class="d-block w-100" src="{% static 'image/mbti0.jpg' %}" style="border-radius: 30px;">
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a href="https://convergencebrainuniversity.tistory.com/290?category=804996">
+                        <img class="d-block w-100" src="{% static 'image/mbti1.jpg' %}" style="border-radius: 30px;">
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a href="https://www.youtube.com/watch?v=--zUldkSgKY">
+                        <img class="d-block w-100" src="{% static 'image/mbti2.jpg' %}" style="border-radius: 30px;">
+                    </a>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
     <div class="container-fluid">
-        <img src="{% static 'image/mbti.jpg' %}" id="mbti">
-        <h4>멘티를 찾습니다</h4>
-        <br>
-        <div class="row">
+        <div
+            style="margin-top: 3rem; margin-bottom: 6rem; display: flex; flex-direction: row; justify-content: space-between;">
+            <div style="text-align: left;">
+                <div>
+                    <h2 style="font-size: 3.5rem; line-height: 1.2; font-weight: bolder; font-style: normal;">
+                        멘티를<br>찾아보세요</h2>
+                    <p style="font-weight: 700; margin-top: 1rem;">코로나로 지친 학교생활, <br>마음맞는 후배들과 소통하고 싶나요?</p>
+                    <hr style="width: 350px; height: 10px; margin-left: 0; " color="#c3b091" >
+                    <span>지금 바로 </span><span style="color: #c3b091; font-weight: 600;">멘토스</span><span>가 매칭해 드릴게요!</span><br><br>
+                    <a href="{% url 'createPost' %}"><button style="text-align: center; width: 100px; height: 40px;  background: #c3b091; border-radius: 8px; border-width: 0px; color: white">멘티 찾기</button></a>
+                </div>
+            </div>
+            <div>
+                <img src="{% static 'image/logo.png' %}" style="width: 350px; height: 350px;">
+            </div>
+        </div>
+
+        <hr class="solid" style="border-top: 1px solid #c3b091;">
+
+        <div style="margin-top:5rem; margin-bottom:2rem; display: flex; flex-direction: row; justify-content: flex-end;">
+            <div>
+                <div style="text-align: right; justify-content: right;">
+                    <div style="text-align:right; width:570px;">
+                        <h2 style="font-size: 3.5rem; line-height: 1.2; font-weight: bolder; font-style: normal;">멘티를<br>찾고있어요
+                        </h2>
+                        <p style="font-weight: 700; margin-top: 1rem;">멘토 없는 대학생활은 맥주 빠진 치킨이죠.</p>
+                        <hr style="height: 10px; width: 350px; margin-right: 0;" color="#c3b091" >
+                        <p>아래에서 나와 꼭 맞는 컴학 선배를 멘토로 만나보세요!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 4rem;">
             {% for post in posts.all %}
             <div class="col-3">
                 <figure class="snip1200">
-                    <img src="{% static 'image/loading_fail.jpg' %}" alt="">
+                    {% if post.manager.profile.mbti == 'ENFJ' %}
+                    <img src="{% static 'image/ENFJ.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'ENFP' %}
+                    <img src="{% static 'image/ENFP.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'ENTJ' %}
+                    <img src="{% static 'image/ENTJ.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'ENTP' %}
+                    <img src="{% static 'image/ENTP.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'ESFJ' %}
+                    <img src="{% static 'image/ESFJ.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'ESFP' %}
+                    <img src="{% static 'image/ESFP.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'ESTJ' %}
+                    <img src="{% static 'image/ESTJ.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'ESTP' %}
+                    <img src="{% static 'image/ESTP.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'INFJ' %}
+                    <img src="{% static 'image/INFJ.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'INFP' %}
+                    <img src="{% static 'image/INFP.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'INTJ' %}
+                    <img src="{% static 'image/INTJ.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'INTP' %}
+                    <img src="{% static 'image/INTP.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'ISFJ' %}
+                    <img src="{% static 'image/ISFJ.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'ISFP' %}
+                    <img src="{% static 'image/ISFP.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'ISTJ' %}
+                    <img src="{% static 'image/ISTJ.png' %}" alt="">
+                    {% endif %}
+                    {% if post.manager.profile.mbti == 'ISTP' %}
+                    <img src="{% static 'image/ISTP.png' %}" alt="">
+                    {% endif %}
 
                     <figcaption>
                         <p> {{post.summary}} </p>

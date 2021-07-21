@@ -26,7 +26,7 @@ p{
 </style>
 <div class = "container-fluid">
     <div id="description">
-        <div id="title">{{profile.name}}님은 어떤 사람인가요?</div>
+        <div id="title">당신은 어떤 사람인가요?</div>
         <p>* 위 검사는 나의 성향과 맞는 멘토스를 찾기 위한 검사입니다.<br>총 <strong>20문항</strong>으로 구성되어 있으며, <strong>5-10분</strong> 정도 소요됩니다.</p>
     </div>
     <!--이 위치에 사진 같은거 있으면 좋을 것 같음-->
@@ -38,15 +38,9 @@ p{
         <div id="option_area">
         </div>
     </div>
-    <form method="post" action="{% url 'result' %}" id="mbti">
+    <form method="post" action="{% url 'only_result' %}" id="mbti">
         {% csrf_token %}
         <input type="hidden" name="result">
-        <input type="hidden" name="userID" value="{{user.username}}">
-        <input type="hidden" name="password" value="{{user.password}}">
-        <input type="hidden" name="name" value="{{profile.name}}">
-        <input type="hidden" name="birthday" value="{{profile.birthday}}">
-        <input type="hidden" name="number" value="{{profile.number}}">
-        <input type="hidden" name="email" value="{{profile.email}}">
     </form>
 </div>
 
@@ -90,7 +84,7 @@ p{
     }
     
     function introduction(){
-        question_area.innerHTML = intro[parseInt(index/question_gap)];
+        question_area.innerHTML = "<p>" + intro[parseInt(index/question_gap)] + "</p>";
         option_area.innerHTML = '<button class="btn btn-outline-dark" id="next_round" type="button">next!</button>';
         var next_round = document.getElementById("next_round");
         next_round.addEventListener("click", function(){next()});

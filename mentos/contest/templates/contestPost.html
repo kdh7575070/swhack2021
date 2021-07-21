@@ -48,11 +48,8 @@
         border: solid white !important;
     }
 
-    #likes {
+    #like {
         color: #c3b091;
-        background-color: #F2F2F2;
-        border: solid white !important;
-        border-radius: 0.25rem;
     }
 </style>
 
@@ -76,42 +73,43 @@
     {% endif %}
     <div class="container-fluid">
         <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">제목: {{post.title}}</h3>
-                <h6 class="card-subtitle mb-2 text-muted">내용 : {{post.updated_at}} PCT by {{post.manager.profile.name}}
-                </h6>
+            <div class="card-body" style="padding:25px; padding-top: 35px;">
+                <h3 class="card-title">제목 : {{post.title}}</h3>
+                <h6 class="card-subtitle mb-2 text-muted">작성일 : {{post.updated_at}} PCT by {{post.manager.profile.name}}</h6>
                 <br>
-                <p class="card-text">
-
                 <pre class="card-text" style="white-space: pre-wrap;"><h4>내용 : {{post.content}}</h4><br></pre>
-                </p>
 
-                <!--즐겨찾기 기능-->
+                <hr class="solid" style="border-top: 1px solid #c3b091;">
 
-                <div style="display:flex; font-size: 1.5rem;" class="good">
+                <!--좋아요 기능-->
+
+                <div style="display:flex; font-size: 1.5rem; margin-top: 2rem;" class="good">
 
                     <div>
                         <a onClick="like({{post.id}})">
                             {% if message == '좋아요취소' %}
-                            <div id="heart" class="fas fa-heart" style="display:inline;"></div>
+                            <span style="color:#c3b091;">
+                            <span id="heart" class="fas fa-heart"></span>
+                            </span>
                             {% elif message == '좋아요' %}
-                            <div id="heart" class="far fa-heart" style="display:inline;"></div>
+                            <span style="color:#c3b091;">
+                            <span id="heart" class="far fa-heart"></span>
+                            </span>
                             {% else %}
                             {% endif %}
-
-                            <p id="like">{{message}}</p>
-
+                            <span id="like">{{message}}</span>
                         </a>
                     </div>
-                    <div class="goodnum">
+                    <!-- <div class="goodnum"> -->
                         <!-- <span id="like_counting">이 멘토를 {{post.like_count}}명이 지켜보고 있습니다.</span> -->
-                    </div>
+                    <!-- </div> -->
                 </div>
                 <br>
 
                 <p class="card-text">분야 :
                     {% for category in categories %}
-                    {{category.category_name}} &nbsp;
+                    "{{category.category_name}}"&nbsp;
+                    <!-- {% if category.category_name != '학업' %} & {% endif %}  -->
                     {% endfor %}
                 </p>
 
@@ -119,130 +117,142 @@
                 <p class="card-text">문의 이메일 : {{post.manager.profile.email}}</p>
                 <p class="card-text">나와의 MBTI 매칭률 : 백엔드 </p>
 
-                {% if user.is_authenticated %}
-                {% if post.manager != user %}
-                <br>
-                <a href="{% url 'createIdea' post.id %}"><button type="button" class="btn btn-dark" id="buttons">멘티
-                        신청</button></a>
-                {% if participate_idea %}
-                <a href="{% url 'contestIdea' post.id participate_idea.id%}"><button type="button" class="btn btn-dark"
-                        id="buttons">신청한 멘티보기</button></a>
-                {% endif%}
-                {% else %}
-                <a href="{% url 'allIdea' post.id%}"> <button type="button" class="btn btn-dark" id="buttons">
-                        신청온 멘티 보기
-                    </button></a>
-                <br>
-                {% endif %}
-                {% endif %}
+                <div style="display:flex; flex-direction: row; justify-content: flex-end;">
+                    <div style="display:flex; flex-direction: column;">
+                        <div>
+                            {% if user.is_authenticated %}
+                            {% if post.manager != user %}
+                    
+                            <a href="{% url 'createIdea' post.id %}"><button type="button" class="btn btn-dark" id="buttons" style=" margin-right: 5px;">멘티 신청</button></a>
+                            {% if participate_idea %}
+                            <a href="{% url 'contestIdea' post.id participate_idea.id%}"><button type="button" class="btn btn-dark" id="buttons" style=" margin-right: 5px;">신청한 멘티보기</button></a>
+                            {% endif%}
+                            {% else %}
+                            <a href="{% url 'allIdea' post.id%}"> <button type="button" class="btn btn-dark" id="buttons">신청 온 멘티 보기</button></a>
+                            <br>
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                        <div style="display:flex; flex-direction: row; justify-content: flex-end; margin-top: 5px;">
+                            <div style="width: auto; margin-right: 5px;">
+                                {% if user == post.manager or user.username == 'admin' %}
+                                <a href="#" data-toggle="modal" data-target="#CatModal"><button type="button" class="btn btn-light"
+                                        id="buttons">삭제</button>
+                                    <ion-icon name="trash"></ion-icon>
+                                </a>
 
-                {% if user == post.manager or user.username == 'admin' %}
-                <a href="#" data-toggle="modal" data-target="#CatModal"><button type="button" class="btn btn-light"
-                        id="buttons">삭제</button>
-                    <ion-icon name="trash"></ion-icon>
-                </a>
-
-                <div id="CatModal" class="modal" tabindex="-1" role="dialog">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">알림</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                                <div id="CatModal" class="modal" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">알림</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>내용을 삭제하시겠습니까?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button onclick="CatDelete()" type="button" class="btn btn-primary">삭제하기</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                                <p>내용을 삭제하시겠습니까?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button onclick="CatDelete()" type="button" class="btn btn-primary">삭제하기</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</button>
+                            <div style="width: auto;">
+                                <a href="{%url 'editPost' post.id %}"><button type="button" class="btn btn-light"
+                                        id="buttons">수정</button></a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <a href="{%url 'editPost' post.id %}"><button type="button" class="btn btn-light"
-                        id="buttons">수정</button></a>
-                {% endif %}
             </div>
         </div>
 
 
         <!--댓글-->
-        <br>
-        {% for comment in comments %}
-        <div class="card">
-            <div class="card-body" id="comment">
-                <h5>{{comment.body}}</h5>
-                <h6>댓글 작성자 : {{comment.c_writer}}
-                    {% if comment.c_writer == post.manager %}
-                    (멘토)
-                    {% endif %}
-                    작성 날짜 : {{comment.pub_date}}
-                </h6>
-                {% if comment.c_writer == user %}
-                <a href="{% url 'comment_delete' post.id comment.id %}">
-                    <button type="button" class="btn btn-dark" id="delete-button">삭제</button>
-                </a>
-                {% endif %}
+        <div>
+            <br>
+            {% for comment in comments %}
+            <div class="card" >
+                <div class="card-body" id="comment" style="padding-bottom: 15px;">
+                    <h5>{{comment.body}}</h5>
+                    <h6>댓글 작성자 : {{comment.c_writer}}
+                        {% if comment.c_writer == post.manager %}
+                        (멘토)
+                        {% endif %}
+                        작성 날짜 : {{comment.pub_date}}
+                    </h6>
+                    <div style="display:flex; flex-direction: row; justify-content: flex-end;">
+                        {% if comment.c_writer == user %}
+                        <a href="{% url 'comment_delete' post.id comment.id %}">
+                            <button type="button" class="btn btn-dark" id="delete-button">삭제</button>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <br>
+            <!--댓글 달기-->
+            <div class="comment">
+                <form name="comment" method='POST' action="{% url 'comment_create' post.id %}"
+                    onsubmit="return comment_validation()">
+                    {% csrf_token %}
+                    <textarea placeholder="내용을 입력해주세요." rows=3 name="body" id="comment-value" style="padding:20px;"></textarea>
+                    <div style="display:flex; flex-direction: row; justify-content: flex-end;">
+                        <input name="rp" class="btn btn-primary" type="submit" value="댓글 달기" id="comment-button">
+                    </div>
+                </form>
             </div>
         </div>
-        {% endfor %}
-        <br>
-        <!--댓글 달기-->
-        <div class="comment">
-            <form name="comment" method='POST' action="{% url 'comment_create' post.id %}"
-                onsubmit="return comment_validation()">
-                {% csrf_token %}
-                <textarea placeholder="내용을 입력해주세요." rows=3 name="body" id="comment-value"></textarea>
-                <input name="rp" class="btn btn-primary" type="submit" value="댓글 달기" id="comment-button">
-            </form>
-        </div>
     </div>
-    </div>
-
-    <script>
-        function CatDelete() {
-            location.replace("/contestPost/delete/{{post.id}}");
-        }
-        function like(id) {
-
-            $.ajax({
-                url: "{%url 'post_like' %}",
-                data: {
-                    'post_id': id,
-                    'csrfmiddlewaretoken': '{{csrf_token}}',
-                },
-                dataType: "json",
-                success: function (response) {
-                    console.log(response.message);
-                    $("#like").replaceWith('<p id="like">' + response.message + '</p>');
-                    $("#like_counting").replaceWith('<span id="like_counting">' + response.num + '</span>');
-                    if (response.message == "좋아요")
-                        $("#heart").replaceWith('<div id="heart" class="far fa-heart" style="display:inline;"></div>');
-                    else if (response.message == "좋아요취소")
-                        $("#heart").replaceWith('<div id="heart" class="fas fa-heart" style="display:inline;"></div>');
-                },
-                error: function (request, status, error) {
-                    alert("error");
-                    alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
-                        "error:" + error)
-
-                },
-            });
-        }
-        function comment_validation() {
-            const content = document.getElementById('comment-value').value;
-            //console.log(content)
-            if (content == '') {
-                alert('빈칸을 입력해주세요');
-                return false
-            }
-            else {
-                return true
-            }
-        };
-    </script>
 </main>
+
+<script>
+    function CatDelete() {
+        location.replace("/contestPost/delete/{{post.id}}");
+    }
+    function like(id) {
+
+        $.ajax({
+            url: "{%url 'post_like' %}",
+            data: {
+                'post_id': id,
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+            },
+            dataType: "json",
+            success: function (response) {
+                console.log(response.message);
+                $("#like").replaceWith('<span id="like">' + response.message + '</span>');
+                $("#like_counting").replaceWith('<span id="like_counting">' + response.num + '</span>');
+                if (response.message == "좋아요")
+                    $("#heart").replaceWith('<span style="color:#c3b091;"><span id="heart" class="far fa-heart"></span></span>');
+                else if (response.message == "좋아요취소")
+                    $("#heart").replaceWith('<span style="color:#c3b091;"><span id="heart" class="fas fa-heart"></span></span>');
+            },
+            error: function (request, status, error) {
+                alert("error");
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
+                    "error:" + error)
+
+            },
+        });
+    }
+    function comment_validation() {
+        const content = document.getElementById('comment-value').value;
+        //console.log(content)
+        if (content == '') {
+            alert('빈칸을 입력해주세요');
+            return false
+        }
+        else {
+            return true
+        }
+    };
+</script>
+
 {% endblock %}

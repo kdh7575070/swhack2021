@@ -49,13 +49,17 @@
         justify-content: center;
     }
 
-    .category {
-        margin-left: 17%;
-        margin-right: 20px;
+    #category img{
+        margin-top: 6px;
+        cursor: pointer;
     }
 
-    .prize {
-        margin-left: 50px;
+    #category input{
+        cursor: pointer;
+    }
+
+    .category {
+        margin-left: 12%;
         margin-right: 20px;
     }
 
@@ -64,7 +68,6 @@
         float: right;
     }
 
-    #submit
 </style>
 
 {% endblock %}
@@ -72,7 +75,6 @@
 
 <main>
     <div class="container-fluid">
-        <script src="../js/createPost.js"></script>
         <form action="{% url 'create' %}" enctype="multipart/form-data" method="POST" onsubmit="return blank_check()">
             {% csrf_token %}
             <div id="title">
@@ -88,17 +90,20 @@
                 <br>
             </div>
 
-            <div id="category" class="category">
-                카테고리
-                {% for category in categories %}
-                {% if category in post_category_list %}
-                <input type="checkbox" class="category" name="category[]" id="{{category}}" value="{{category}}"
-                    checked="checked">{{category}}
-                {% else %}
-                <input type="checkbox" class="category" name="category[]" id="{{category}}"
-                    value="{{category}}">{{category}}
-                {% endif %}
-                {% endfor %}
+            <div id='category'>
+                <span style="font-weight:600">카테고리</span>
+                <input type="checkbox" name="category[]" id="category1" value="운동 및 취미" class="category">운동 및 취미 &nbsp;
+                <label for="category1">
+                    <img id="woman" src="{% static 'image/ISFP.png' %}"  width="40px" height="40px">
+                </label>
+                <input type="checkbox" name="category[]" id="category2" value="대학생활" class="category">대학생활 &nbsp;
+                <label for="category2">
+                    <img id="woman" src="{% static 'image/INFP.png' %}"  width="40px" height="40px">
+                </label>
+                <input type="checkbox" name="category[]" id="category3" value="학업" class="category">학업 &nbsp;
+                <label for="category3">
+                    <img id="friend" src="{% static 'image/ISTJ.png' %}"  width="40px" height="40px">
+                </label>
                 <br>
             </div>
 

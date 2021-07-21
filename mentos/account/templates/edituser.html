@@ -1,42 +1,50 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block header %}
 
-<head>
-    <title>Edituser</title>
-</head>
+<title>Edituser</title>
+<style>
+    .container-fluid input {
+        margin-top: 0.3rem;
+        margin-bottom: 0.6rem;
+        width: 220px;
+    }
+</style>
 
 {% endblock %}
 {% block main %}
 
 <main>
-    <div class="container">
-        <h1>edituser</h1>
+    <div class="container-fluid">
+        <h1 style="margin-bottom: 2rem; font-size: x-large; font-weight: 700;">회원정보수정</h1>
         <form method="POST" action="{% url 'updateuser' %}">
             {% csrf_token %}
             아이디:
             <br>
-            <input name="userID" type="text" placeholder="{{user.username}}" readonly>
+            <input name="userID" type="text" placeholder="{{user.username}} [수정불가]" readonly>
             <br>
             비밀번호:
             <br>
-            <input name="password1" type="password" placeholder="수정불가" readonly>
+            <input name="password1" type="password" placeholder="[수정불가]" readonly>
             <br>
             비밀번호 확인:
             <br>
-            <input name="password2" type="password" placeholder="수정불가" readonly>
+            <input name="password2" type="password" placeholder="[수정불가]" readonly>
             <br>
-            아래 필드를 전부 채워주세요
             <br>
+            <h5 style="font-weight: 500;">아래 필드를 수정해주세요!</h5><br>
             닉네임:
             <br>
             <input name="name" type="text" value="{{user.profile.name}}">
             <br>
-            생일:
+            생년월일:
             <br>
-            <input name="birthday" class="form-control" type="date" value='{{user.profile.birthday|date:"Y-m-d"}}'>
+            <div style="width: 220px;">
+                <input name="birthday" class="form-control" style="margin-bottom: 0 !important;" type="date" value='{{user.profile.birthday|date:"Y-m-d"}}'>
+            </div>
             <br>
-            핸드폰 번호(공백없이숫자만):
+            전화번호 (공백없이숫자만):
             <br>
             <input name="number" type="tel" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" value="{{user.profile.number}}">
             <br>
@@ -45,9 +53,9 @@
             <input name="email" type="email" pattern="[a-z0-9._%+-]+@[a-z]+.+[a-z]"
                 value="{{user.profile.email}}">
             <br>
-            mbti:
+            MBTI:
             <br>
-            <select name="mbti">
+            <select name="mbti" style="width:220px; height:30px;">
                 <option id="ISTJ" value="ISTJ">ISTJ</option>
                 <option id="ISFJ" value="ISFJ">ISFJ</option>
                 <option id="INFJ" value="INFJ">INFJ</option>
@@ -67,9 +75,12 @@
             </select>
             <br>
             <br>
-            <input type="submit" class="btn btn-success" value="edit">
+            <div id="submit" style="display: flex; flex-direction: row; justify-content: flex-end;">
+                <input type="submit" class="btn btn-outline-dark" style="width:auto !important; " value="수정하기">
+            </div>
         </form>
     </div>
+
 </main>
 <script>
     window.onload = function(){

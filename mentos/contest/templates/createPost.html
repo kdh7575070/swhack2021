@@ -39,11 +39,6 @@
         border-bottom: 1px solid #c3b091
     }
 
-    .date {
-        margin: 40px auto;
-        text-align: center;
-    }
-
     #category {
         margin: 40px;
         padding: 10px;
@@ -54,8 +49,17 @@
         justify-content: center;
     }
 
+    #category img{
+        margin-top: 6px;
+        cursor: pointer;
+    }
+
+    #category input{
+        cursor: pointer;
+    }
+
     .category {
-        margin-left: 17%;
+        margin-left: 12%;
         margin-right: 20px;
     }
 
@@ -84,12 +88,22 @@
             </div>
 
             <div id='category'>
-                카테고리
-                <input type="checkbox" name="category[]" id="category1" value="운동 및 취미" class="category">운동 및 취미
-                <input type="checkbox" name="category[]" id="category2" value="대학생활" class="category">대학생활
-                <input type="checkbox" name="category[]" id="category3" value="학업" class="category">학업
+                <span style="font-weight:600">카테고리</span>
+                <input type="checkbox" name="category[]" id="category1" value="운동 및 취미" class="category">운동 및 취미 &nbsp;
+                <label for="category1">
+                    <img id="woman" src="{% static 'image/ISFP.png' %}"  width="40px" height="40px">
+                </label>
+                <input type="checkbox" name="category[]" id="category2" value="대학생활" class="category">대학생활 &nbsp;
+                <label for="category2">
+                    <img id="woman" src="{% static 'image/INFP.png' %}"  width="40px" height="40px">
+                </label>
+                <input type="checkbox" name="category[]" id="category3" value="학업" class="category">학업 &nbsp;
+                <label for="category3">
+                    <img id="friend" src="{% static 'image/ISTJ.png' %}"  width="40px" height="40px">
+                </label>
                 <br>
             </div>
+
             <div class="container">
                 <div id="check_message" style="margin: 40px; float:left">
                     모든 필드를 채웠는지 확인해주세요
