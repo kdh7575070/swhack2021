@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block main %}
+<h1>{{profile.name}}님은 어떤 사람인가요?</h1>
+<p>위 검사는 나의 성향과 맞는 멘토를 추천하기 위한 검사입니다.<br>총 20문항으로 구성되어 있으며, 5-10분 정도 소요됩니다.</p>
+
+<a href="/">home으로</a>
+
+<div id="question_area">
+</div>
+<br>
+
+<div id="option_area">
+    <button id="option1_area" type="button"></button>
+    <button id="option2_area" type="button"></button>
+</div>
+
+<form method="post" action="{% url 'result' %}" id="mbti">
+    {% csrf_token %}
+    <input type="hidden" name="result">
+    <input type="hidden" name="userID" value="{{user.username}}">
+    <input type="hidden" name="password" value="{{user.password}}">
+    <input type="hidden" name="name" value="{{profile.name}}">
+    <input type="hidden" name="birthday" value="{{profile.birthday}}">
+    <input type="hidden" name="number" value="{{profile.number}}">
+    <input type="hidden" name="email" value="{{profile.email}}">
+</form>
+<br>
+
+<script type="text/javascript">
+    var question = {{question|safe}};
+    var option1 = {{option1|safe}};
+    var option2 = {{option2|safe}};
+    
+    var question_area = document.getElementById("question_area");
+    var option_area = document.getElementById("option_area");
+    var option1_area = document.getElementById("option1_area");
+    var option2_area = document.getElementById("option2_area");
+    
+    var mbti = [0, 0, 0, 0];
+    var question_gap = question.length / 4;
+    var side1 = ['I', 'N', 'F', 'P'];
+    var side2 = ['E', 'S', 'T', 'J'];
+
+    function calculate(){
+        var result = "";
+        for (var i=0; i<4; i++){
+            if (mbti[i] <= 0){
+                result += side1[i];
+            }
+            else{
+                result += side2[i];
+            }
+        }
+        return result;
+    }
+
+    function change(clicked_area){
+        switch(clicked_area){
+                case 'option1_area':
+                    mbti[parseInt(index/question_gap)] -= 1;
+                    break;
+                case 'option2_area':
+                    mbti[parseInt(index/question_gap)] += 1;
+                    break;
+        }
+        if (index >= 3){
+            var result = calculate();   
+            input = document.getElementsByName("result")[0]
+            input.setAttribute("value", result);
+            form = document.getElementById("mbti")
+            form.submit();
+            return;
+        }
+
+        index += 1;
+
+        question_area.innerHTML = "<p>" + question[index] + "</p>";
+        option1_area.innerHTML = option1[index];
+        option2_area.innerHTML = option2[index];
+    }
+
+    // initial value
+    var index = 0;
+    question_area.innerHTML = "<p>" + question[0] + "</p>";
+    option1_area.innerHTML = option1[0];
+    option1_area.addEventListener("click", function(){change(this.id)});
+    option2_area.innerHTML = option2[0];
+    option2_area.addEventListener("click", function(){change(this.id)});
+</script>
+{% endblock %}

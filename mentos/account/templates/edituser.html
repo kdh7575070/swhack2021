@@ -14,46 +14,68 @@
         <h1>edituser</h1>
         <form method="POST" action="{% url 'updateuser' %}">
             {% csrf_token %}
-            user ID:
+            아이디:
             <br>
             <input name="userID" type="text" placeholder="{{user.username}}" readonly>
             <br>
-            password:
+            비밀번호:
             <br>
             <input name="password1" type="password" placeholder="수정불가" readonly>
             <br>
-            confirm password:
+            비밀번호 확인:
             <br>
             <input name="password2" type="password" placeholder="수정불가" readonly>
             <br>
             아래 필드를 전부 채워주세요
             <br>
-            user name:
+            닉네임:
             <br>
-            <input name="name" type="text" placeholder="{{user.profile.name}}">
+            <input name="name" type="text" value="{{user.profile.name}}">
             <br>
-            birtday:
+            생일:
             <br>
-            <input name="birthday" class="form-control" type="date" placeholder="{{user.profile.birthday}}">
+            <input name="birthday" class="form-control" type="date" value='{{user.profile.birthday|date:"Y-m-d"}}'>
             <br>
-            폰번호(공백없이숫자만):
+            핸드폰 번호(공백없이숫자만):
             <br>
-            <input name="number" type="tel" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" placeholder="{{user.profile.number}}">
+            <input name="number" type="tel" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" value="{{user.profile.number}}">
             <br>
             이메일:
             <br>
             <input name="email" type="email" pattern="[a-z0-9._%+-]+@[a-z]+.+[a-z]"
-                placeholder="{{user.profile.email}}">
+                value="{{user.profile.email}}">
             <br>
             mbti:
             <br>
-            <input name="mbti" type="mbti" placeholder="{{user.profile.mbti}}">
+            <select name="mbti">
+                <option id="ISTJ" value="ISTJ">ISTJ</option>
+                <option id="ISFJ" value="ISFJ">ISFJ</option>
+                <option id="INFJ" value="INFJ">INFJ</option>
+                <option id="INTJ" value="INTJ">INTJ</option>
+                <option id="ISTP" value="ISTP">ISTP</option>
+                <option id="ISFP" value="ISFP">ISFP</option>
+                <option id="INFP" value="INFP">INFP</option>
+                <option id="INTP" value="INTP">INTP</option>
+                <option id="ESTP" value="ESTP">ESTP</option>
+                <option id="ESFP" value="ESFP">ESFP</option>
+                <option id="ENFP" value="ENFP">ENFP</option>
+                <option id="ENTP" value="ENTP">ENTP</option>
+                <option id="ESTJ" value="ESTJ">ESTJ</option>
+                <option id="ESFJ" value="ESFJ">ESFJ</option>
+                <option id="ENFJ" value="ENFJ">ENFJ</option>
+                <option id="ENTJ" value="ENTJ">ENTJ</option>
+            </select>
             <br>
-
             <br>
             <input type="submit" class="btn btn-success" value="edit">
         </form>
     </div>
-
 </main>
+<script>
+    window.onload = function(){
+        var mbti = "{{ user.profile.mbti }}";
+        var selected = document.getElementById(mbti);
+        selected.setAttribute("selected", "True");
+    }
+</script>
 {% endblock %}

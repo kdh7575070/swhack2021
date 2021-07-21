@@ -32,10 +32,7 @@ class Profile(models.Model):
     mbti = models.CharField(default='', max_length=4, null=False, choices=MBTI)
     number = models.CharField(default='', max_length=15, null=True)
     email = models.CharField(default='', max_length=50, null=True)
-    
-    class Meta:
-        db_table = 'user_management'
-        
+'''
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -44,3 +41,4 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+'''

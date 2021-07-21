@@ -53,6 +53,11 @@
 
                                             <input class="btn btn-primary" type="submit" value="로그인"></input>
                                         </div>
+                                        {% if error %}
+                                        {{ error }}
+                                        <br>
+                                        <br>
+                                        {% endif %}
                                     </form>
                                 </div>
                                 <div class="card-footer text-center">

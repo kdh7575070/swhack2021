@@ -6,31 +6,78 @@ from django.http import HttpResponse
 from .models import *
 from contest.models import *
 from django.core.paginator import Paginator
-
+import json
+from .mbti import question, option1, option2
 
 # Create your views here.
 def signup(request):
     if request.method == "POST":
-        if request.POST["password1"] == request.POST["password2"]:
-            try:
-                user=User.objects.get(username=request.POST['userID'])
-                return HttpResponse('이미 사용하고 있는 아이디입니다!')
-            except User.DoesNotExist:
-                user = User.objects.create_user(
-                    username=request.POST["userID"],password=request.POST["password1"]
-                )
-                user.profile.name=request.POST['name']
-                user.profile.birthday=request.POST['birthday']
-                user.profile.mbti=request.POST['mbti']
-                user.profile.number=request.POST['number']
-                user.profile.email=request.POST['email']
-                if user.profile.name and user.profile.birthday and user.profile.number and user.profile.email:
-                    user.save()
-                else:
-                    return HttpResponse('모든필드를채워주세요!')
-                auth.login(request,user)
+        userID=request.POST.get('userID', None)
+        name=request.POST.get('name', None)
+        birthday=request.POST.get('birthday', None)
+        mbti=request.POST.get('mbti', None)
+        password1 = request.POST.get('password1', None)
+        password2 = request.POST.get('password2', None)
+        number=request.POST.get('number', None)
+        email=request.POST.get('email', None)
+        # 회원가입 검증
+        if not (userID and password1 and password2 and name and birthday and number and email and mbti):
+            return render(request, 'signup.html', {'error': '필수 정보를 입력해주세요!'})
+        if User.objects.filter(username=userID).exists():
+            return render(request, 'signup.html', {'error': '중복된 아이디입니다.'})
+        if Profile.objects.filter(name=name).exists():
+            return render(request, 'signup.html', {'error': '중복된 닉네임입니다.'})
+        # 비밀번호 일치 여부 확인
+        if password1 == password2:
+            user = User()
+            user.username = userID
+            user.password = password1
+            profile = Profile()
+            profile.name = name
+            profile.birthday = birthday
+            profile.number = number
+            profile.email = email
+            # mbti 검사 페이지로 이동
+            if mbti == '모름':
+                return render(request, 'mbti.html', {'user': user, 'profile': profile, 'question': json.dumps(question), 'option1': json.dumps(option1), 'option2': json.dumps(option2)})
+            # home으로 이동
+            else:
+                profile.mbti = mbti
+                user.save()
+                profile.user = user
+                profile.save() 
+                auth.login(request, user)
                 return redirect('home')
+        else:
+            return render(request, 'signup.html', {'error': '비밀번호가 일치하지 않습니다.'})
     return render(request,'signup.html')
+
+def mbti(request):
+    return render(request, 'mbti.html')
+
+def result(request):
+    result = request.POST['result']
+    username = request.POST['userID']
+    password = request.POST['password']
+    name = request.POST['name']
+    birthday = request.POST['birthday']
+    number = request.POST['number']
+    email = request.POST['email']
+
+    user = User.objects.create_user(
+        username = username,
+        password = password
+    )
+    profile = Profile.objects.create(
+        user = user,
+        name = name,
+        birthday = birthday,
+        number = number,
+        email = email,
+        mbti = result
+    )
+    auth.login(request,user)
+    return render(request, 'result.html', {'profile': profile})
 
 def login(request):
     if request.method =="POST":
@@ -41,7 +88,7 @@ def login(request):
             auth.login(request,user)
             return redirect('home')
         else:
-            return HttpResponse('userID or password is incorrect')
+            return render(request, 'login.html', {'error': '가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.'})
     else:
         return render(request, 'login.html')
 
@@ -91,14 +138,16 @@ def mypage(request):
     return render(request,'mypage.html')
 
 def edituser(request):
+    user = request.user
     return render(request,'edituser.html')
 
 def updateuser(request):
     user = request.user
-    user.profile.name=request.POST['name']
-    user.profile.birthday=request.POST['birthday']
-    user.profile.mbti=request.POST['mbti']
-    user.profile.number=request.POST['number']
-    user.profile.email=request.POST['email']
-    user.save()
+    profile = Profile.objects.get(user=user)
+    profile.name=request.POST['name']
+    profile.birthday=request.POST['birthday']
+    profile.mbti=request.POST['mbti']
+    profile.number=request.POST['number']
+    profile.email=request.POST['email']
+    profile.save()
     return render(request, 'mypage.html')
