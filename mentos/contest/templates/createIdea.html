@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+
+<title>createIdea</title>
+<link rel="stylesheet" href="{% static 'css/createIdea.css' %}">
+<style>
+    input:focus, textarea:focus {
+        outline: none;
+    }
+
+    #title {
+        font-size: 30px;
+        border: 0;
+        margin: 40px;
+        padding: 30px;
+        border-bottom: 1px solid #c3b091
+    }
+
+    #article {
+        border: none;
+        margin: 40px;
+        padding: 30px;
+        border-bottom: 1px solid #c3b091
+    }
+
+    #submit {
+        margin: 40px;
+        float: right;
+    }
+</style>
+
+{% endblock %}
+{% block main %}
+
+<main>
+    <div class="container-fluid">
+        <form action="{% url 'createI' post.id %}" enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+
+            <div id="title">
+                <input type="text" name="title" placeholder="제목" style="width:100%; border: none;">
+                <br>
+            </div>
+
+            <div id="article">
+                <textarea rows=20 name="content" placeholder="나를 소개해주세요" style="width:100%; border: none;"></textarea>
+            </div>
+
+            <div class="container">
+                <div id="submit">
+                    <input class="btn btn-outline-dark" type="submit" value="제출하기">
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+{% endblock %}

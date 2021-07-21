@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+<head>
+    <title>Edituser</title>
+</head>
+
+{% endblock %}
+{% block main %}
+
+<main>
+    <div class="container">
+        <h1>edituser</h1>
+        <form method="POST" action="{% url 'updateuser' %}">
+            {% csrf_token %}
+            user ID:
+            <br>
+            <input name="userID" type="text" placeholder="{{user.username}}" readonly>
+            <br>
+            password:
+            <br>
+            <input name="password1" type="password" placeholder="수정불가" readonly>
+            <br>
+            confirm password:
+            <br>
+            <input name="password2" type="password" placeholder="수정불가" readonly>
+            <br>
+            아래 필드를 전부 채워주세요
+            <br>
+            user name:
+            <br>
+            <input name="name" type="text" placeholder="{{user.profile.name}}">
+            <br>
+            birtday:
+            <br>
+            <input name="birthday" class="form-control" type="date" placeholder="{{user.profile.birthday}}">
+            <br>
+            폰번호(공백없이숫자만):
+            <br>
+            <input name="number" type="tel" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" placeholder="{{user.profile.number}}">
+            <br>
+            이메일:
+            <br>
+            <input name="email" type="email" pattern="[a-z0-9._%+-]+@[a-z]+.+[a-z]"
+                placeholder="{{user.profile.email}}">
+            <br>
+            mbti:
+            <br>
+            <input name="mbti" type="mbti" placeholder="{{user.profile.mbti}}">
+            <br>
+
+            <br>
+            <input type="submit" class="btn btn-success" value="edit">
+        </form>
+    </div>
+
+</main>
+{% endblock %}

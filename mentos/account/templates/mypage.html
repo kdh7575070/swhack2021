@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+
+<title>My page</title>
+<link rel="stylesheet" href="{% static 'css/mypage.css' %}">
+<style>
+    .container-fluid {
+        padding-bottom: 2%;
+        padding-left: 10rem !important;
+        padding-right: 10rem !important;
+    }
+
+    .card {
+        margin-bottom: 1rem;
+    }
+</style>
+
+{% endblock %}
+{% block main %}
+
+<main>
+    <div class="container-fluid">
+        <!-- <h1 class="mt-4">&nbsp{{user}}님의 마이 페이지</h1> -->
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">회원정보</li>
+            <!-- <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item active">Charts</li> -->
+        </ol>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">닉네임 : {{user.profile.name}}</h3>
+                <h5 class="card-text">생년월일 : {{user.profile.birthday}}</h5>
+                <h5 class="card-text">휴대폰 번호 : {{user.profile.number}}</h5>
+                <h5 class="card-text">이메일 : {{user.profile.email}}</h5>
+                <h5 class="card-text">MBTI : {{user.profile.mbti}}</h5>
+            </div>
+
+            <div style="margin-left: 87%;">
+                <a href="{% url 'edituser' %}"><button type="button" class="btn btn-dark">회원정보수정</button><br><br></a>
+            </div>
+        </div>
+        <br>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'likedPage' %}">관심있는 멘토</a></li>
+        </ol>
+
+        <div class="row">
+            {% for post in like_posts %}
+            <br>
+            <div class="col-lg-6">
+                <div class="card bg text-black mb-4">
+                    <div class="card-body">
+                        <h2>{{post.title}}</h2>
+                        <h5>{{post.summary}}</h5>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-black stretched-link" href="{% url 'contestPost' post.id %}">더보기</a>
+                        <div class="small text-black"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if like_posts %}
+        <ul class="pagination justify-content-center">
+            {% if like_posts.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?like_page={{like_posts.previous_page_number}}">이전</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">이전</a>
+            </li>
+            {% endif %}
+
+            {% for i in like_posts.paginator.page_range %}
+            {% if like_posts.number == i %}
+            <li class="page-item active">
+                <a class="page-link" href="?like_page={{i}}">{{i}}<span class="sr-only">(current)</span></a>
+            </li>
+            {% else %}
+            <li class="page-item"><a class="page-link" href="?like_page={{i}}">{{i}}</a></li>
+            {% endif %}
+            {% endfor %}
+
+            {% if like_posts.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?like_page={{like_posts.next_page_number}}">다음</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">다음</a>
+            </li>
+            {% endif %}
+        </ul>
+        {% endif %}
+
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'participantPage' %}">멘티로 신청한 게시물 목록</a></li>
+        </ol>
+
+        <div class="row">
+            {% for post in participant_posts %}
+            <br>
+            <div class="col-lg-6">
+                <div class="card bg text-black mb-4">
+                    <div class="card-body">
+                        <h2>{{post.title}}</h2>
+                        <h5>{{post.summary}}</h5>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-black stretched-link" href="{% url 'contestPost' post.id %}">더보기</a>
+                        <div class="small text-black"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if participant_posts %}
+        <ul class="pagination justify-content-center"">
+            {% if participant_posts.has_previous %}
+            <li class=" page-item">
+            <a class="page-link" href="?participant_page={{participant_posts.previous_page_number}}">이전</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">이전</a>
+            </li>
+            {% endif %}
+
+            {% for i in participant_posts.paginator.page_range %}
+            {% if participant_posts.number == i %}
+            <li class="page-item active">
+                <a class="page-link" href="?participant_page={{i}}">{{i}}<span class="sr-only">(current)</span></a>
+            </li>
+            {% else %}
+            <li class="page-item"><a class="page-link" href="?participant_page={{i}}">{{i}}</a></li>
+            {% endif %}
+            {% endfor %}
+
+            {% if participant_posts.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?participant_page={{participant_posts.next_page_number}}">다음</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">다음</a>
+            </li>
+            {% endif %}
+        </ul>
+        {% endif %}
+
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'hostPage' %}">멘티 찾기 게시물 목록</a></li>
+        </ol>
+
+        <div class="row">
+            {% for post in host_posts %}
+            <br>
+            <div class="col-lg-6">
+                <div class="card bg text-black mb-4">
+                    <div class="card-body">
+                        <h2>{{post.title}}</h2>
+                        <h5>{{post.summary}}</h5>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-black stretched-link" href="{% url 'contestPost' post.id %}">더보기</a>
+                        <div class="small text-black"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if host_posts %}
+        <ul class="pagination justify-content-center">
+            {% if host_posts.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?host_page={{host_posts.previous_page_number}}">이전</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">이전</a>
+            </li>
+            {% endif %}
+
+            {% for i in host_posts.paginator.page_range %}
+            {% if host_posts.number == i %}
+            <li class="page-item active">
+                <a class="page-link" href="?host_page={{i}}">{{i}}<span class="sr-only">(current)</span></a>
+            </li>
+            {% else %}
+            <li class="page-item"><a class="page-link" href="?host_page={{i}}">{{i}}</a></li>
+            {% endif %}
+            {% endfor %}
+
+            {% if host_posts.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?host_page={{host_posts.next_page_number}}">다음</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">다음</a>
+            </li>
+            {% endif %}
+        </ul>
+        {% endif %}
+
+    </div>
+</main>
+{% endblock %}

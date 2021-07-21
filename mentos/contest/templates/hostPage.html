@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+
+<title>hostPage</title>
+<link rel="stylesheet" href="{% static 'css/listPage.css' %}">
+<style>
+</style>
+
+{% endblock %}
+{% block main %}
+
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">&nbsp{{user}}님이 올린 멘티 찾기 게시물</h1>
+        <ol class="breadcrumb mb-4">
+            <!-- <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item active">Charts</li> -->
+        </ol>
+        <div class="row">
+            {% for post in posts %}
+            {% if post.manager == user %}
+            <br>
+            <div class="col-lg-6">
+                <div class="card bg text-black mb-4">
+                    <div class="card-body">
+                        <h2>{{post.title}}</h2>
+                        <h5>{{post.summary}}</h5>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-black stretched-link" href="{% url 'contestPost' post.id %}">View
+                            Details</a>
+                        <div class="small text-black"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+            {% endfor %}
+
+        </div>
+    </div>
+</main>
+{% endblock %}

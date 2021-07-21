@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+
+<title>Search</title>
+<link rel="stylesheet" type="text/css" href="{% static 'contest/css/search.css' %}">
+<style>
+    div:hover {
+        color: #0583F2;
+    }
+
+    h4 {
+        color: #c3b091;
+        margin-left: 2rem;
+        font-family: sans-serif;
+    }
+
+    #post_c {
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: space-between;
+        flex-wrap: wrap;
+        display: flex;
+    }
+
+    #post_m {
+        flex-direction: row;
+        justify-content: left;
+        align-content: space-between;
+        flex-wrap: wrap;
+        display: flex;
+        margin-left: 8rem;
+    }
+
+    #post {
+        color: black;
+        font-family: sans-serif;
+        border: #F2F2F2 0.1rem solid;
+        width: 20rem;
+        height: 25rem;
+        box-shadow: #F2F2F2 0.1rem 0.1rem;
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+        margin-right: 4rem;
+    }
+
+    #post_item {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        margin-top: 0.5rem;
+        font-size: 1.5rem;
+    }
+
+
+    #category_c {
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: space-between;
+        flex-wrap: wrap;
+        display: flex;
+    }
+
+    #category_m {
+        flex-direction: row;
+        justify-content: left;
+        align-content: space-between;
+        flex-wrap: wrap;
+        display: flex;
+        margin-left: 8rem;
+    }
+
+    #category {
+        color: black;
+        font-family: sans-serif;
+        border: #F2F2F2 0.1rem solid;
+        width: 20rem;
+        height: 23.5rem;
+        box-shadow: #F2F2F2 0.1rem 0.1rem;
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+        margin-right: 4rem;
+    }
+
+    #category_item {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        margin-top: 0.5rem;
+        font-size: 1.5rem;
+    }
+</style>
+
+{% endblock %}
+{% block main %}
+
+<main>
+    {% if post_search %}
+    <h3 style="padding-top: 3rem !important; padding-left: 8rem !important;" }>
+        검색 결과
+    </h3><br>
+    <div id="post_c">
+        <div id="post_m">
+            {% for post in post_search.all %}
+            <a href="{%url 'contestPost' post.id%}" style="text-decoration: none;">
+                <div id="post">
+                    <img src="{% static 'image/loading_fail.jpg' %}" style="width: 20rem; height: 20rem;">
+                    <div id="post_item">
+                        <b>{{post.title}}</b>
+                    </div>
+                </div>
+            </a>
+            <br>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    {% if category_posts %}
+    <br>
+    <h3 style="padding-top: 2rem !important; padding-left: 8rem !important;" }>
+        카테고리 검색 결과
+    </h3><br>
+    <div id="category_c">
+        <div id="category_m">
+            {% for category_post in category_posts %}
+            <br>
+
+            <div id="category">
+                <a href="{%url 'contestPost' category_post.id%}" style="text-decoration: none;">
+                    <img src="{% static 'image/loading_fail.jpg' %}" style="width: 20rem; height: 20rem;">
+                    <div id="category_item">
+                        <b>{{category_post.title}}</b>
+                    </div>
+                </a>
+            </div>
+            <br>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+
+</main>
+{% endblock %}
