@@ -1,28 +1,194 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block main %}
+
+<title>Result</title>
 <style>
-#description{
-    padding-bottom: 20px;
-}
-#title{
-    font-size: 30px;
-    margin: 10px;
-    padding: 15px;
-}
-p{
-    margin: 30px;
-    font-size: 20px;
-}
-a{
-    margin: 30px;
-}
+    #description {
+        padding-bottom: 20px;
+    }
+
+    #description #title {
+        font-size: 30px;
+        margin: 10px;
+        padding: 15px;
+    }
+
+    #description #title p {
+        margin: 30px;
+        font-size: 20px;
+    }
+
+    #findmymentos {
+        margin: 30px;
+    }
+
+    .mbtiimage {
+        margin: 30px
+    }
+
+    .mbtiimage img {
+        width: 300px;
+        height: 300px;
+    }
 </style>
+
 <div class="container-fluid">
     <div id="description">
-        <div id="title">{{profile.name}}님의 결과입니다.</div>
-        <p>{{profile.mbti}}!</p>
+        <div id="title">{{profile.name}}님은 {{profile.mbti}}입니다.</div>
+            <div class="mbtiimage">
+                {% if profile.mbti == 'ENFJ' %}
+                <img src="{% static 'image/ENFJ.png' %}" alt="">
+                <br><br><br>
+                <h4>따뜻한 카리스마 전형적인 과대표형</h4>
+                <br>
+                #정의로운 사회운동가 #언변능숙형
+                <br><br>
+                keyword : 적극, 책임감, 사교성, 동정심, 이타적
+                {% endif %}
+                {% if profile.mbti == 'ENFP' %}
+                <img src="{% static 'image/ENFP.png' %}" alt="">
+                <br><br><br>
+                <h4>의욕 빼면 시체인 프로젝트 인간 굴삭기</h4>
+                <br>
+                #재기발랄한 활동가 #스파크형 #대외활동 마스터 #열정부자
+                <br><br>
+                keyword : 정열, 활기, 상상력, 창의력, 몽상가
+                {% endif %}
+                {% if profile.mbti == 'ENTJ' %}
+                <img src="{% static 'image/ENTJ.png' %}" alt="">
+                <br><br><br>
+                <h4>404보다 근손실이 무서운 그대</h4>
+                <br>
+                #자기 관리 만렙 #대담한 통솔자 #지도자형
+                <br><br>
+                keyword : 자기주장, 단호, 지도력, 통솔력, 주도, 자기관리
+                {% endif %}
+                {% if profile.mbti == 'ENTP' %}
+                <img src="{% static 'image/ENTP.png' %}" alt="">
+                <br><br><br>
+                <h4>정문에 피어난 프로 관종러</h4>
+                <br>
+                #뜨거운 논쟁을 즐기는 변론가 #발명가형
+                <br><br>
+                keyword : 독창적, 창의적, 솔선력, 혁명가
+                {% endif %}
+                {% if profile.mbti == 'ESFJ' %}
+                <img src="{% static 'image/ESFJ.png' %}" alt="">
+                <br><br><br>
+                <h4>수업시간 맨앞 줄 담당</h4>
+                <br>
+                #알고리즘은 #못짜도 #리액션은 #짜낸다 #사교적인 외교관 #친선도모형
+                <br><br>
+                keyword : 동정심, 관심, 동료애, 참을성, 사회성
+                {% endif %}
+                {% if profile.mbti == 'ESFP' %}
+                <img src="{% static 'image/ESFP.png' %}" alt="">
+                <br><br><br>
+                <h4>개인기만 50가지 간절한 엠티바라기</h4>
+                <br>
+                #자유로운 영혼의 연예인 #사교적
+                <br><br>
+                keyword : 사교적, 활동적, 적응력, 낙천적, 센스
+                {% endif %}
+                {% if profile.mbti == 'ESTJ' %}
+                <img src="{% static 'image/ESTJ.png' %}" alt="">
+                <br><br><br>
+                <h4>교수님 저 친구 이름 빼주세요</h4>
+                <br>
+                #피도 눈물도 없는 #엄격한 관리자 #사업가형
+                <br><br>
+                keyword : 현실적, 구체적, 리더십, 조직적, 가부장적, 근면성실
+                {% endif %}
+                {% if profile.mbti == 'ESTP' %}
+                <img src="{% static 'image/ESTP.png' %}" alt="">
+                <br><br><br>
+                <h4>학점은 인생의 마지막 과제 - 숙련된 출튀 조교</h4>
+                <br>
+                #모험을 즐기는 사업가 #수완 좋은 활동가형
+                <br><br>
+                keyword : 사실적, 개방, 관대, 유머러스, 스릴
+                {% endif %}
+                {% if profile.mbti == 'INFJ' %}
+                <img src="{% static 'image/INFJ.png' %}" alt="">
+                <br><br><br>
+                <h4>팀플의 햇살 같은 너</h4>
+                <br>
+                #사교적인 외교관 #친선도모형
+                <br><br>
+                keyword : 인내심, 통찰력, 직관, 화합, 창의력, 독립적, 정신적 지도자
+                {% endif %}
+                {% if profile.mbti == 'INFP' %}
+                <img src="{% static 'image/INFP.png' %}" alt="">
+                <br><br><br>
+                <h4>나는야 웹엑스계의 유재석</h4>
+                <br>
+                #내면의 불꽃형 #소리 없는 아우성형 #잔다르크형 #중재자형
+                <br><br>
+                keyword : 공상, 감정적, 즉흥적, 개인주의, 이해심
+                {% endif %}
+                {% if profile.mbti == 'INTJ' %}
+                <img src="{% static 'image/INTJ.png' %}" alt="">
+                <br><br><br>
+                <h4>디버깅이 필요 없는 인간 컴파일러</h4>
+                <br>
+                #용의주도한 전략가
+                <br><br>
+                keyword : 체계적, 추론, 합리성, 해결책, 완벽주의, 설계
+                {% endif %}
+                {% if profile.mbti == 'INTP' %}
+                <img src="{% static 'image/INTP.png' %}" alt="">
+                <br><br><br>
+                <h4>해커톤 섭외 1순위 이 구역의 아이디어 뱅크</h4>
+                <br>
+                #객관적인 분석가 #사색가
+                <br><br>
+                keyword : 논리, 분석, 문제 해결, 통찰력
+                {% endif %}
+                {% if profile.mbti == 'ISFJ' %}
+                <img src="{% static 'image/ISFJ.png' %}" alt="">
+                <br><br><br>
+                <h4>보일듯 안 보이는 아싸 중의 인싸</h4>
+                <br>
+                #용감한 수호자 #실용적인 조력가 #게으른 완벽주의자형
+                <br><br>
+                keyword : 차분, 계획적, 협조적, 인내력, 외유내강, 섬세
+                {% endif %}
+                {% if profile.mbti == 'ISFP' %}
+                <img src="{% static 'image/ISFP.png' %}" alt="">
+                <br><br><br>
+                <h4>잇사의 비폭력주의 간디</h4>
+                <br>
+                #컴퓨터는 #잘못이 #없다 #호기심 많은 예술가 #성인군자형
+                <br><br>
+                keyword : 온화, 친절, 상황파악, 의견 충돌 회피, 예술적
+                {% endif %}
+                {% if profile.mbti == 'ISTJ' %}
+                <img src="{% static 'image/ISTJ.png' %}" alt="">
+                <br><br><br>
+                <h4>연구실의 오른팔 도비</h4>
+                <br>
+                #책임감 있는 현실주의자 #청렴결백한 논리주의자
+                <br><br>
+                keyword : 체계적, 책임감, 신중, 조직적, 인내력, 정리정돈
+                {% endif %}
+                {% if profile.mbti == 'ISTP' %}
+                <img src="{% static 'image/ISTP.png' %}" alt="">
+                <br><br><br>
+                <h4>캠퍼스의 걸어다니는 스택오버플로우</h4>
+                <br>
+                #논리적인 실용주의자 #호기심 의인화형 #백과사전형
+                <br><br>
+                keyword : 호기심, 상황 파악, 객관적
+                {% endif %}
+            </div>
+        </div>
     </div>
     <br>
-    <a href="/">내 멘토스 찾기!</a>
+    <a href="https://convergencebrainuniversity.tistory.com/290?category=804996" id="findmymentos">MBTI에 대한 설명이 더 궁금하다면?</a>
+    <br><br>
+    <a href="/" id="findmymentos">회원가입페이지로 돌아가기!</a>
 </div>
+
 {% endblock %}
