@@ -164,6 +164,11 @@
     {% else %}
     <!-- <script>alert("로그인 후 서비스를 이용하실 수 있습니다");</script> -->
     {% endif %}
+    {% if message %}
+    <script>
+        alert('{{message}}');
+    </script>
+    {% endif %}
     <div class="carrage">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">

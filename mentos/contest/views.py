@@ -7,7 +7,8 @@ import random
 from django.http import HttpResponse
 import json
 from .mbti_chemistry import index, chemistry
-
+from django.urls import reverse
+from urllib.parse import urlencode
 #C
 def create(request):
     post=Post()
@@ -31,6 +32,7 @@ def create(request):
 #R
 #홈페이지
 def home(request):
+
     posts = Post.objects
     post_list=list(Post.objects.all())
 
@@ -50,35 +52,41 @@ def home(request):
     
     if random_items is not None:
         items_range = range(1, len(random_items)+1)
-    return render(request,'home.html',{'posts':posts, 'random_post':random_post, 'random_items':random_items, 'items_range':items_range})  
+
+    message = request.GET.get('message', None)
+
+    return render(request,'home.html',{'message': message,'posts':posts, 'random_post':random_post, 'random_items':random_items, 'items_range':items_range})  
 
 #멘티글
 def contestPost(request, post_id):
     user=request.user
     post = get_object_or_404(Post,pk=post_id)
     categories = Category.objects.all().filter(post = post)
-
-    # mbti 매칭률 계산
-    my_mbti = user.profile.mbti
-    writer_mbti = post.manager.profile.mbti
-
-    my_index = index[my_mbti]
-    writer_index = index[writer_mbti]
-
-    result = str(chemistry[my_index][writer_index] * 25) + "%!!"
-
-    if post.likes.filter(id=user.id):
-        message="좋아요취소"
-    else:
-        message="좋아요"
-    #좋아요버튼
     num = post.likes.count()
-    
     comments = Comment.objects.all().filter(post = post)
 
-    participate_idea = Idea.objects.filter(post = post, i_writer = user).first()
-    if participate_idea is not None:
-        return render(request,'contestPost.html' ,{'post':post, 'message':message, 'comments':comments, 'categories':categories, 'participate_idea': participate_idea, 'num':num, 'result': result})
+    if not request.user.is_authenticated:
+        result = '비회원'
+        message = '좋아요'
+    else:
+        # mbti 매칭률 계산
+        my_mbti = user.profile.mbti
+        writer_mbti = post.manager.profile.mbti
+
+        my_index = index[my_mbti]
+        writer_index = index[writer_mbti]
+
+        result = str(chemistry[my_index][writer_index] * 25) + "%!!"
+
+        if post.likes.filter(id=user.id):
+            message="좋아요취소"
+        else:
+            message="좋아요"
+        #좋아요버튼
+
+        participate_idea = Idea.objects.filter(post = post, i_writer = user).first()
+        if participate_idea is not None:
+            return render(request,'contestPost.html' ,{'post':post, 'message':message, 'comments':comments, 'categories':categories, 'participate_idea': participate_idea, 'num':num, 'result': result})
 
     return render(request,'contestPost.html' ,{'post':post, 'message':message, 'comments':comments, 'categories':categories, 'num':num, 'result': result})
 
@@ -117,6 +125,12 @@ def allIdea(request, post_id):
 
 #게시글 등록 페이지
 def createPost(request):
+    if not request.user.is_authenticated:
+        base_url = reverse('home')
+        message = urlencode({'message':"멘티 찾기는 로그인이 필요합니다."})
+        url = '{}?{}'.format(base_url, message)
+        return redirect(url)
+        #return render(request, 'home.html', {'message': message})
     return render(request, 'createPost.html')
 
 #U

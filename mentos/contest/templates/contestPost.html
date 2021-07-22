@@ -85,7 +85,11 @@
                     <h5>{{post.content}}</h5>
                 </pre>
                 <p class="card-subtitle mb-2 text-muted">문의 이메일 : {{post.manager.profile.email}}</p>
+                {% if result == '비회원' %}
+                <p class="card-subtitle mb-2 text-muted">나와의 MBTI 케미 : <a href="{% url 'only_mbti' %}" style="color: #C3B091; font-weight: bold;":>내 mbti 알아보기</a></p>
+                {% else %}
                 <p class="card-subtitle mb-2 text-muted">나와의 MBTI 케미 : <span style="color: #C3B091; font-weight: bold;":>{{result}}</span></p>
+                {% endif %}
                 <br>
                 
                 <hr class="solid" style="border-top: 1px solid #c3b091;">
@@ -93,7 +97,15 @@
                 <!--좋아요 기능-->
 
                 <div style="display:flex; font-size: 1.5rem; margin-top: 2rem;" class="good">
-
+                    {% if result == '비회원' %}
+                    <div>
+                        <span style="color:#c3b091;">
+                            <span id="heart" class="far fa-heart"></span>
+                        </span>
+                        <span id="like_counting">{{num}}</span>
+                        <span style="color: #c3b091;">명이 지켜보는 중입니다.</span>
+                    </div>
+                    {% else %}
                     <div>
                         <a onClick="like({{post.id}})">
                             {% if message == '좋아요취소' %}
@@ -111,6 +123,7 @@
                             <span id="like" hidden>{{message}}</span>
                         </a>
                     </div>
+                    {% endif %}
                 </div>
                 <br>
 
@@ -204,6 +217,7 @@
             {% endfor %}
             <br>
             <!--댓글 달기-->
+            {% if result != '비회원' %}
             <div class="comment">
                 <form name="comment" method='POST' action="{% url 'comment_create' post.id %}"
                     onsubmit="return comment_validation()">
@@ -214,6 +228,7 @@
                     </div>
                 </form>
             </div>
+            {% endif %}
         </div>
     </div>
 </main>
