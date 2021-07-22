@@ -15,6 +15,10 @@
     .card {
         margin-bottom: 1rem;
     }
+
+    .breadcrumb mb-4{
+        margin-top: 5rem !important;
+    }
 </style>
 
 {% endblock %}
@@ -23,7 +27,7 @@
 <main>
     <div class="container-fluid">
         <!-- <h1 class="mt-4">&nbsp{{user}}님의 마이 페이지</h1> -->
-        <ol class="breadcrumb mb-4">
+        <ol class="breadcrumb mb-4" style="margin-top:2rem; font-weight: 600 !important">
             <li class="breadcrumb-item active">회원정보</li>
             <!-- <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
             <li class="breadcrumb-item active">Charts</li> -->
@@ -37,13 +41,13 @@
                 <h5 class="card-text">MBTI : {{user.profile.mbti}}</h5>
             </div>
 
-            <div style="margin-left: 87%;">
+            <div style="display: flex; flex-direction: row; justify-content: flex-end; margin-right: 2rem; ">
                 <a href="{% url 'edituser' %}"><button type="button" class="btn btn-dark">회원정보수정</button><br><br></a>
             </div>
         </div>
         <br>
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item"><a href="{% url 'likedPage' %}">관심있는 멘토</a></li>
+        <ol class="breadcrumb mb-4" style="margin-top:3rem;  font-weight: 600">
+            <li class="breadcrumb-item"><a href="{% url 'likedPage' %}">관심있는 멘토 게시물 목록</a></li>
         </ol>
 
         <div class="row">
@@ -98,8 +102,8 @@
         </ul>
         {% endif %}
 
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item"><a href="{% url 'participantPage' %}">멘티로 신청한 게시물 목록</a></li>
+        <ol class="breadcrumb mb-4" style="margin-top:3rem;  font-weight: 600">
+            <li class="breadcrumb-item"><a href="{% url 'participantPage' %}">멘티로 지원한 게시물 목록</a></li>
         </ol>
 
         <div class="row">
@@ -154,8 +158,8 @@
         </ul>
         {% endif %}
 
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item"><a href="{% url 'hostPage' %}">멘티 찾기 게시물 목록</a></li>
+        <ol class="breadcrumb mb-4" style="margin-top:3rem; font-weight: 600;">
+            <li class="breadcrumb-item"><a href="{% url 'hostPage' %}">멘티를 구하는 게시물 목록</a></li>
         </ol>
 
         <div class="row">
