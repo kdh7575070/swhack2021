@@ -64,7 +64,7 @@
             <div class="card-body" style="padding:25px; padding-top: 35px;">
                 <div style="padding-bottom: 10px;">
                     {% for category in categories %}
-                    <a href="{% url 'category' c_name=category.category_name %}" class="card-text" style="color: #C3B091">
+                    <a href="{% url 'category' c_name=category.category_name %}" class="card-text" style="font-weight:600; color: #C3B091">
                         {{category.category_name}}
                         <!-- {% if category.category_name != '학업' %} & {% endif %}  -->
                     </a>
@@ -107,12 +107,10 @@
                             {% else %}
                             {% endif %}
                             <span id="like_counting">{{num}}</span>
+                            <span style="color: #c3b091;">명이 지켜보는 중입니다.</span>
                             <span id="like" hidden>{{message}}</span>
                         </a>
                     </div>
-                    <!-- <div class="goodnum"> -->
-                        <!-- <span id="like_counting">이 멘토를 {{post.like_count}}명이 지켜보고 있습니다.</span> -->
-                    <!-- </div> -->
                 </div>
                 <br>
 
@@ -243,9 +241,9 @@
                     $("#heart").replaceWith('<span style="color:#c3b091;"><span id="heart" class="fas fa-heart"></span></span>');
             },
             error: function (request, status, error) {
-                alert("error");
-                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
-                    "error:" + error)
+                // alert("error");
+                // alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
+                //     "error:" + error)
 
             },
         });

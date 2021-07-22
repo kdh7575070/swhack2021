@@ -24,11 +24,6 @@
         padding: 30px;
         border-bottom: 1px solid #c3b091
     }
-
-    #submit {
-        margin: 40px;
-        float: right;
-    }
 </style>
 
 {% endblock %}
@@ -45,10 +40,10 @@
             </div>
 
             <div id="article">
-                <textarea rows=20 name="content" placeholder="나를 소개해주세요" style="width:100%; border: none;"></textarea>
+                <textarea rows=10 name="content" placeholder="나를 소개해주세요" style="width:100%; border: none;"></textarea>
             </div>
 
-            <div class="container">
+            <div class="container" style="display: flex; flex-direction: row; justify-content: flex-end; padding:40px;">
                 <div id="submit">
                     <input class="btn btn-outline-dark" type="submit" value="제출하기">
                 </div>

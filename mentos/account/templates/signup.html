@@ -99,12 +99,13 @@
                                         </div>
                                         <div class="form-group mt-4 mb-0"><input class="btn btn-primary btn-block"
                                                 type="submit" value="계정 만들기"></input></div>
-                                    </form>
+                                    </form>   
+                                    <br>
+                                    <span style="color: #c3b091; display:flex; justify-content: center;">          
+                                    잠깐, {% if error %}
+                                    {{ error }}
+                                    </span>
                                 </div>
-                                {% if error %}
-                                {{ error }}
-                                <br>
-                                <br>
                                 {% endif %}
                                 <div class="card-footer text-center">
                                     <div class="small"><a href='{% url "login" %}'>이미 계정이 있으신가요? 로그인 하러가기</a>
