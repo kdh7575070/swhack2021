@@ -162,7 +162,7 @@
 <main>
     {% if user.is_authenticated %}
     {% else %}
-    <script>alert("로그인 후 서비스를 이용하실 수 있습니다");</script>
+    <!-- <script>alert("로그인 후 서비스를 이용하실 수 있습니다");</script> -->
     {% endif %}
     <div class="carrage">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -298,6 +298,23 @@
             {% endfor %}
         </div>
     </div>
+<!-- 
+    <footer>
+        <div id="layoutAuthentication_footer">
+            <footer class="py-4 bg-light mt-auto" style="padding: 2.5% !important;">
+                <div class="container ">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; LIONS 2021<br></div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions<br></a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </footer> -->
 </main>
 
 {% endblock %}
