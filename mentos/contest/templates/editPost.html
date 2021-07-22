@@ -119,5 +119,17 @@
         </form>
     </div>
 </main>
-
+<script>
+    window.onload = function(){
+        categories = {{post_category_list|safe}};
+        var input = document.getElementsByName("category[]");
+        for (var i=0; i<categories.length; i++){
+            for (var j=0; j<input.length; j++){
+                if (categories[i] == input[j].value){
+                    input[j].setAttribute("checked", "True");
+                }
+            }
+        }
+    }
+</script>
 {% endblock %}

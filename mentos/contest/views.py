@@ -62,10 +62,11 @@ def contestPost(request, post_id):
     else:
         message="좋아요"
     #좋아요버튼
-    num = post.like_count
-
-    comments = Comment.objects.all().filter(post = post)
+    num = post.likes.count()
     
+    comments = Comment.objects.all().filter(post = post)
+    comment_num = comments.count()
+
     participate_idea = Idea.objects.filter(post = post, i_writer = user).first()
     if participate_idea is not None:
         return render(request,'contestPost.html' ,{'post':post, 'message':message, 'comments':comments, 'categories':categories, 'participate_idea': participate_idea, 'num':num})
@@ -121,7 +122,7 @@ def edit(request, post_id):
 
     return render(request, 'editPost.html', {'post':post,
                                             'post_category_list':post_category_list,
-                                            'categories':categories
+                                            'categories':json.dumps(categories)
                                             })
 
 def update(request, post_id):
@@ -178,7 +179,7 @@ def category(request, c_name):
         if category.post not in category_posts: 
             category_posts.append(category.post)
             
-    return render(request,'search.html' , {'category_posts': category_posts})
+    return render(request,'search.html' , {'c_name': c_name, 'category_posts': category_posts})
 
 
 # def post_like(request, post_id):
@@ -229,7 +230,7 @@ def post_like(request):
         }
 
         return HttpResponse(json.dumps(ret), content_type="application/json")
-        
+     
 #댓글 관련
 def comment_create(request, post_id):
     if request.method == "POST":

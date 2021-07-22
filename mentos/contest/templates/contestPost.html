@@ -51,34 +51,43 @@
     #like {
         color: #c3b091;
     }
+    #like_counting{
+       color:#c3b091;
+    }
 </style>
 
 {% endblock %}
 {% block main %}
-
 <main>
-    <!-- 오류 메세지 테스트-->
-    {% if message %}
-
-    <div id="message" style="display:none;">{{message}}</div>
-    <script>alert("본인의 게시물이거나 이미 참여하신 게시물입니다.");</script>
-    <!-- 해결필요...! -->
-    <!-- <script>
-        var messageVar = document.getElementById("message").innerHTML;
-        function Alert() {
-            alert(messageVar)
-        }
-        Alert()
-    </script> -->
-    {% endif %}
     <div class="container-fluid">
         <div class="card">
             <div class="card-body" style="padding:25px; padding-top: 35px;">
-                <h3 class="card-title">제목 : {{post.title}}</h3>
-                <h6 class="card-subtitle mb-2 text-muted">작성일 : {{post.updated_at}} PCT by {{post.manager.profile.name}}</h6>
-                <br>
-                <pre class="card-text" style="white-space: pre-wrap;"><h4>내용 : {{post.content}}</h4><br></pre>
+                <div style="padding-bottom: 10px;">
+                    {% for category in categories %}
+                    <a href="{% url 'category' c_name=category.category_name %}" class="card-text" style="color: #C3B091">
+                        {{category.category_name}}
+                        <!-- {% if category.category_name != '학업' %} & {% endif %}  -->
+                    </a>
+                    {% endfor %}
+                </div>
+                <h3 class="card-title">{{post.title}}</h3>
+                
+                <div class="card-text" style="padding-bottom:20px;">
+                    <img style="width: 32px; height: 32px; vertical-align: middle;" src="/static/image/logo.png">
+                    <span style="margin-left:10px; margin-top:20px;font-size:18px;" >
+                        {{post.manager.profile.name}}
+                    </span>
+                </div>
 
+                <h6 class="card-subtitle mb-2 text-muted">{{post.updated_at}}</h6>
+                <br>
+                <pre class="card-text" style="white-space: pre-wrap;">
+                    <h5>{{post.content}}</h5>
+                </pre>
+                <p class="card-subtitle mb-2 text-muted">문의 이메일 : {{post.manager.profile.email}}</p>
+                <p class="card-subtitle mb-2 text-muted">나와의 MBTI 매칭률 : 백엔드 </p>
+                <br>
+                
                 <hr class="solid" style="border-top: 1px solid #c3b091;">
 
                 <!--좋아요 기능-->
@@ -97,7 +106,8 @@
                             </span>
                             {% else %}
                             {% endif %}
-                            <span id="like">{{message}}</span>
+                            <span id="like_counting">{{num}}</span>
+                            <span id="like" hidden>{{message}}</span>
                         </a>
                     </div>
                     <!-- <div class="goodnum"> -->
@@ -105,17 +115,6 @@
                     <!-- </div> -->
                 </div>
                 <br>
-
-                <p class="card-text">분야 :
-                    {% for category in categories %}
-                    "{{category.category_name}}"&nbsp;
-                    <!-- {% if category.category_name != '학업' %} & {% endif %}  -->
-                    {% endfor %}
-                </p>
-
-                <p class="card-text">작성자 닉네임 : {{post.manager.profile.name}}</p>
-                <p class="card-text">문의 이메일 : {{post.manager.profile.email}}</p>
-                <p class="card-text">나와의 MBTI 매칭률 : 백엔드 </p>
 
                 <div style="display:flex; flex-direction: row; justify-content: flex-end;">
                     <div style="display:flex; flex-direction: column;">
@@ -177,15 +176,24 @@
         <div>
             <br>
             {% for comment in comments %}
-            <div class="card" >
-                <div class="card-body" id="comment" style="padding-bottom: 15px;">
+            <div class="card">
+                <div class="card-body" id="comment" style="padding:25px; padding-top: 35px;">
+                    <div>
+                        <img style="width: 32px; height: 32px; vertical-align: middle;" src="/static/image/logo.png">
+                        <span style="margin-left:10px; margin-top:20px;font-size:18px;" >
+                            {{comment.c_writer}}
+                            {% if comment.c_writer == post.manager %}
+                            (멘토)
+                            {% endif %}
+                        </span>
+                    </div>
+                    
+                    <div style="margin-bottom: 10px; margin-top:10px;">
                     <h5>{{comment.body}}</h5>
-                    <h6>댓글 작성자 : {{comment.c_writer}}
-                        {% if comment.c_writer == post.manager %}
-                        (멘토)
-                        {% endif %}
-                        작성 날짜 : {{comment.pub_date}}
-                    </h6>
+                    </div>
+                    <div style="color: #C3B091; font-size: 16px;">
+                    {{comment.pub_date}}
+                    </div>
                     <div style="display:flex; flex-direction: row; justify-content: flex-end;">
                         {% if comment.c_writer == user %}
                         <a href="{% url 'comment_delete' post.id comment.id %}">
@@ -227,7 +235,7 @@
             dataType: "json",
             success: function (response) {
                 console.log(response.message);
-                $("#like").replaceWith('<span id="like">' + response.message + '</span>');
+                $("#like").replaceWith('<span id="like" hidden>' + response.message + '</span>');
                 $("#like_counting").replaceWith('<span id="like_counting">' + response.num + '</span>');
                 if (response.message == "좋아요")
                     $("#heart").replaceWith('<span style="color:#c3b091;"><span id="heart" class="far fa-heart"></span></span>');
