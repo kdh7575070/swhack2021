@@ -4,9 +4,6 @@ db.sqlite3
 *.pyc
 __pycache__
 
-# key file 
-secrets.json
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
