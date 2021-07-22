@@ -21,7 +21,7 @@ $ pip install -r requirements.txt
 $ cd mentos
 $ python manage.py makemigrations account
 $ python manage.py makemigrations contest
-$ python manage.py migrates
+$ python manage.py migrate
 $ python manage.py runserver
 ```
 
