@@ -75,7 +75,7 @@
 
 <main>
     <div class="container-fluid">
-        <form action="{% url 'create' %}" enctype="multipart/form-data" method="POST" onsubmit="return blank_check()">
+        <form action="{% url 'update' post.id %}" enctype="multipart/form-data" method="POST" onsubmit="return blank_check()">
             {% csrf_token %}
             <div id="title">
 

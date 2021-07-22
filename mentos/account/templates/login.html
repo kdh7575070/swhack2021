@@ -48,15 +48,14 @@
                                                     for="rememberPasswordCheck">자동로그인</label>
                                             </div>
                                         </div>
-                                        <div
-                                            class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-
-                                            <input class="btn btn-primary" type="submit" value="로그인"></input>
+                                        <div class="form-group mt-4 mb-0">
+                                            <input class="btn btn-primary btn-block" type="submit" value="로그인"></input>
                                         </div>
+                                        <br>
                                         {% if error %}
+                                        <span style="color: #c3b091; display:flex; justify-content: center;">
                                         {{ error }}
-                                        <br>
-                                        <br>
+                                        </span>
                                         {% endif %}
                                     </form>
                                 </div>

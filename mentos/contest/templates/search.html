@@ -95,6 +95,10 @@
         width: 11.9rem;
         height: 12rem;
     }
+
+    b{
+        color: #c3b091;
+    }
 </style>
 
 {% endblock %}
@@ -162,7 +166,7 @@
                             {% endif %}
                         </div>
                         <div id="post_item">
-                            <b>{{post.title}}</b>
+                            <b>{{post.summary}}</b>
                         </div>
                     </div>
                 </a>
@@ -234,7 +238,7 @@
                             {% endif %}
                         </div>
                         <div id="category_item">
-                            <b>{{category_post.title}}</b>
+                            <b>{{category_post.summary}}</b>
                         </div>
                     </a>
                 </div>

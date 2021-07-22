@@ -4,8 +4,19 @@
 {% block header %}
 
 <title>All Idea</title>
-<link rel="stylesheet" href="{% static 'css/allIdea.css' %}">
+<!--<link rel="stylesheet" href="{% static 'css/allIdea.css' %}">-->
 <style>
+    a{
+        color: black;
+    }
+    a:hover{
+        color: #c3b091 !important;
+    }
+    #title{
+        font-size: 30px;
+        margin: 10px;
+        padding: 15px;
+    }
     .bg-dark {
         background-color: #c3b091 !important;
     }
@@ -14,51 +25,24 @@
         background-color: #c3b091;
     }
 
-    #id1 {
-        color: #c3b091;
-        font-size: xx-large;
-        font-family: 'Roboto';
-        src: url('../fonts/Roboto-Light-webfont.woff');
-        font-weight: 300;
-        font-style: normal;
-        text-align: center;
-        margin-top: 60px;
-
-    }
-
     #id2 {
-        color: #c3b091;
-        font-family: 'Roboto';
-        src: url('../fonts/Roboto-Light-webfont.woff');
-        font-weight: 300;
-        font-style: normal;
         text-align: center;
         font-size: large;
     }
 
     #id3 {
-        color: #c3b091;
-        font-family: 'Roboto';
-        src: url('../fonts/Roboto-Light-webfont.woff');
-        font-weight: 300;
-        font-style: normal;
         text-align: center;
     }
 
     #id4 {
-        color: #c3b091;
-        font-family: 'Roboto';
-        src: url('../fonts/Roboto-Light-webfont.woff');
-        font-weight: 300;
-        font-style: normal;
         text-align: center;
     }
 
     .box {
         border: 1px solid #c3b091;
         padding: 20px;
-        width: 800px;
-        height: 200px;
+        width: auto;
+        height: auto;
         box-sizing: border-box;
         margin-left: auto;
         margin-right: auto;
@@ -75,8 +59,9 @@
 {% block main %}
 
 <main>
-    <div class="like">
-        <div id="id1"> "{{post.manager.profile.name}}"의 '{{post.title}}'에 모인 멘티 리스트 </div>
+    <div class="container-fluid">
+    <div>
+        <div id="title"> "{{post.manager.profile.name}}"의 '{{post.title}}'에 모인 멘티 리스트 </div>
         <br>
         {% for idea in ideas %}
         <br>
@@ -89,14 +74,12 @@
                     {% endif %}
                 </div>
                 <br>
-                <div id="id3">내용 : {{idea.summary}}</div>
+                <div id="id3">내용 : {{idea.summary}}</div><br>
                 <div id="id3">작성자 : {{idea.i_writer.profile.name}}</div>
             </div>
         </a>
-        <br>
-        <br>
         {% endfor %}
     </div>
-
+    </div>
 </main>
 {% endblock %}

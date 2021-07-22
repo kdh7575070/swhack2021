@@ -31,7 +31,7 @@ def signup(request):
         if password1 == password2:
             user = User()
             user.username = userID
-            user.password = password1
+            user.set_password(password1)
             profile = Profile()
             profile.name = name
             profile.birthday = birthday

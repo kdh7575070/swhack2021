@@ -118,8 +118,8 @@
                             </span>
                             {% else %}
                             {% endif %}
-                            <span id="like_counting">{{num}}</span>
-                            <span style="color: #c3b091;">명이 지켜보는 중입니다.</span>
+                            <span id="like_counting" style="cursor: pointer;">{{num}}</span>
+                            <span style="color: #c3b091; cursor: pointer;">명이 지켜보는 중입니다.</span>
                             <span id="like" hidden>{{message}}</span>
                         </a>
                     </div>
@@ -134,7 +134,7 @@
                             {% if post.manager != user %} <!-- 게시글 작성자가 아닐 때 -->
                     
                                 {% if participate_idea %}
-                                <a href="{% url 'contestIdea' post.id participate_idea.id%}"><button type="button" class="btn btn-dark" id="buttons" style=" margin-right: 5px;">신청한 멘티보기</button></a>
+                                <a href="{% url 'contestIdea' post.id participate_idea.id%}"><button type="button" class="btn btn-dark" id="buttons" style=" margin-right: 5px;">멘티 신청 정보 보기</button></a>
                                 {% else %}
                                 <a href="{% url 'createIdea' post.id %}"><button type="button" class="btn btn-dark" id="buttons" style=" margin-right: 5px;">멘티 신청</button></a>
                                 {% endif%}
@@ -194,7 +194,7 @@
                     <div>
                         <img style="width: 32px; height: 32px; vertical-align: middle;" src="/static/image/logo.png">
                         <span style="margin-left:10px; margin-top:20px;font-size:18px;" >
-                            {{comment.c_writer}}
+                            {{comment.c_writer.profile.name}}
                             {% if comment.c_writer == post.manager %}
                             (멘토)
                             {% endif %}

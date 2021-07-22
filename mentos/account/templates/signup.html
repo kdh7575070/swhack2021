@@ -101,12 +101,12 @@
                                                 type="submit" value="계정 만들기"></input></div>
                                     </form>   
                                     <br>
+                                    {% if error %}
                                     <span style="color: #c3b091; display:flex; justify-content: center;">          
-                                    잠깐, {% if error %}
                                     {{ error }}
                                     </span>
+                                    {% endif %}
                                 </div>
-                                {% endif %}
                                 <div class="card-footer text-center">
                                     <div class="small"><a href='{% url "login" %}'>이미 계정이 있으신가요? 로그인 하러가기</a>
                                     </div>

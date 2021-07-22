@@ -21,7 +21,10 @@ class Post(models.Model):
         )
     
     def summary(self):
-        return self.content[:30]
+        if len(self.title) > 6:
+            return self.title[:6]+".."
+        else:
+            return self.title
 
     def __str__(self):
         return self.title
