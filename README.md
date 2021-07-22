@@ -1,4 +1,5 @@
-# Prject MENTOS knu
+# Project MENTOS knu
+## 작품명 MENTOS made by LIONS
 
 Django == 3.0 version에서 개발되었습니다
 
