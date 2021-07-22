@@ -292,9 +292,9 @@
                     {% endif %}
 
                     <figcaption>
-                        <p> {{post.summary}} </p>
+                        <p> {{post.content}} </p>
                         <div class="heading">
-                            <h2><span> {{post.title}} </span></h2>
+                            <h2><span> {{post.summary}} </span></h2>
                         </div>
                     </figcaption>
                     <a href="{% url 'contestPost' post.id %}"></a>

@@ -56,28 +56,31 @@ def mbti(request):
     return render(request, 'mbti.html')
 
 def result(request):
-    result = request.POST['result']
-    username = request.POST['userID']
-    password = request.POST['password']
-    name = request.POST['name']
-    birthday = request.POST['birthday']
-    number = request.POST['number']
-    email = request.POST['email']
+    if request.method == 'POST':
+        result = request.POST.get('result', None)
+        username = request.POST.get('userID', None)
+        password = request.POST.get('password', None)
+        name = request.POST.get('name', None)
+        birthday = request.POST.get('birthday', None)
+        number = request.POST.get('number', None)
+        email = request.POST.get('email', None)
 
-    user = User.objects.create_user(
-        username = username,
-        password = password
-    )
-    profile = Profile.objects.create(
-        user = user,
-        name = name,
-        birthday = birthday,
-        number = number,
-        email = email,
-        mbti = result
-    )
-    auth.login(request,user)
-    return render(request, 'result.html', {'profile': profile})
+        user = User()
+        user.username = username
+        user.password = password
+        user.save()
+        profile = Profile()
+        profile.name = name
+        profile.birthday = birthday
+        profile.number = number
+        profile.email = email
+        profile.mbti = result
+        profile.user = user
+        profile.save() 
+
+        auth.login(request,user)
+        
+        return render(request, 'result.html', {'profile': profile})
 
 def only_mbti(request):
     return render(request, 'only_mbti.html', {'intro': json.dumps(intro), 'question': json.dumps(question), 'option1': json.dumps(option1), 'option2': json.dumps(option2)})
