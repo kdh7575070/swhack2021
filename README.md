@@ -3,6 +3,7 @@
 
 Django == 3.0 version에서 개발되었습니다
 
+    $ source myvenv/Script/activate
     $ pip install -r requirements.txt
     $ cd mentos
     $ python manage.py makemigrations account
