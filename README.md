@@ -3,10 +3,10 @@
 > 너의 달콤한 대학생활을 약속해, "Mentos" <br>
 > 
 * 전자공학부 강태하 (kdh7575070) <br>
-* 컴퓨터학부 오지은 (Angela-OH) <br>
+* 컴퓨터학부 오지은 (Angela-OH, JIEuNO) <br>
 
 
-## 개발 환경 (WEB)
+## 개발 환경
 * Django 3.0 version <br>
 * Python 3.8.7 version <br>
 * Apache 2.4.46 version <br>
@@ -14,6 +14,8 @@
 
 ## 실행 방법
 ```shell
+$ git clone https://github.com/kdh7575070/swhack2021.git
+$ cd swhack2021/
 $ python -m venv myvenv
 $ source myvenv/Script/activate (Windows)
 $ source myvenv/bin/activate (Mac)
