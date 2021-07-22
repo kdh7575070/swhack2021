@@ -31,7 +31,7 @@ $ python manage.py runserver
 > http://mentos.o-r.kr/ (* PC 버전)
 
 ## 시연 연상 : 
-> {{유튜브 주소}}
+> https://youtu.be/mDpVopjVsL4
 
 ## 상세 설명 :
 ![Slide1](https://user-images.githubusercontent.com/67677983/126683263-73936bf0-c7d8-45a2-a080-34eb3af16983.png)
