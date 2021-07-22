@@ -28,7 +28,7 @@ $ python manage.py runserver
 ```
 
 ## 서비스 URL : 
-> http://mentos.o-r.kr/ (only PC 버전)
+> http://mentos.o-r.kr/ (* PC 버전)
 
 ## 시연 연상 : 
 > {{유튜브 주소}}
