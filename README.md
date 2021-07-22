@@ -6,7 +6,7 @@
 * 컴퓨터학부 오지은 (Angela-OH) <br>
 
 
-## 개발 환경
+## 개발 환경 (WEB)
 * Django 3.0 version <br>
 * Python 3.8.7 version <br>
 * Apache 2.4.46 version <br>
