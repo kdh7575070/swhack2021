@@ -37,8 +37,8 @@
         color: black;
         font-family: sans-serif;
         border: #F2F2F2 0.1rem solid;
-        width: 20rem;
-        height: 25rem;
+        width: 12rem;
+        height: 15.5rem;
         box-shadow: #F2F2F2 0.1rem 0.1rem;
         margin-top: 3rem;
         margin-bottom: 1rem;
@@ -75,8 +75,8 @@
         color: black;
         font-family: sans-serif;
         border: #F2F2F2 0.1rem solid;
-        width: 20rem;
-        height: 23.5rem;
+        width: 12rem;
+        height: 15.5rem;
         box-shadow: #F2F2F2 0.1rem 0.1rem;
         margin-top: 3rem;
         margin-bottom: 1rem;
@@ -90,56 +90,159 @@
         margin-top: 0.5rem;
         font-size: 1.5rem;
     }
+
+    .mbti img{
+        width: 11.9rem;
+        height: 12rem;
+    }
 </style>
 
 {% endblock %}
 {% block main %}
 
 <main>
-    {% if post_search %}
-    <h3 style="padding-top: 3rem !important; padding-left: 8rem !important;" }>
-        '{{m}}' 검색 결과
-    </h3><br>
-    <div id="post_c">
-        <div id="post_m">
-            {% for post in post_search.all %}
-            <a href="{%url 'contestPost' post.id%}" style="text-decoration: none;">
-                <div id="post">
-                    <img src="{% static 'image/loading_fail.jpg' %}" style="width: 20rem; height: 20rem;">
-                    <div id="post_item">
-                        <b>{{post.title}}</b>
-                    </div>
-                </div>
-            </a>
-            <br>
-            {% endfor %}
-        </div>
-    </div>
-    {% endif %}
-    {% if category_posts %}
-    <br>
-    <h3 style="padding-top: 2rem !important; padding-left: 8rem !important;" }>
-        '{{c_name}}' 검색 결과
-    </h3><br>
-    <div id="category_c">
-        <div id="category_m">
-            {% for category_post in category_posts %}
-            <br>
-
-            <div id="category">
-                <a href="{%url 'contestPost' category_post.id%}" style="text-decoration: none;">
-                    <img src="{% static 'image/loading_fail.jpg' %}" style="width: 20rem; height: 20rem;">
-                    <div id="category_item">
-                        <b>{{category_post.title}}</b>
+    <div class="container-fluid">
+        {% if post_search %}
+        <h3 style="padding-top: 3rem !important; padding-left: 8rem !important;" }>
+            '{{m}}' 검색 결과
+        </h3><br>
+        <div id="post_c">
+            <div id="post_m">
+                {% for post in post_search.all %}
+                <a href="{%url 'contestPost' post.id%}" style="text-decoration: none;">
+                    <div id="post">
+                        <div class="mbti">
+                            {% if post.manager.profile.mbti == 'ENFJ' %}
+                            <img src="{% static 'image/ENFJ.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'ENFP' %}
+                            <img src="{% static 'image/ENFP.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'ENTJ' %}
+                            <img src="{% static 'image/ENTJ.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'ENTP' %}
+                            <img src="{% static 'image/ENTP.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'ESFJ' %}
+                            <img src="{% static 'image/ESFJ.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'ESFP' %}
+                            <img src="{% static 'image/ESFP.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'ESTJ' %}
+                            <img src="{% static 'image/ESTJ.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'ESTP' %}
+                            <img src="{% static 'image/ESTP.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'INFJ' %}
+                            <img src="{% static 'image/INFJ.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'INFP' %}
+                            <img src="{% static 'image/INFP.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'INTJ' %}
+                            <img src="{% static 'image/INTJ.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'INTP' %}
+                            <img src="{% static 'image/INTP.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'ISFJ' %}
+                            <img src="{% static 'image/ISFJ.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'ISFP' %}
+                            <img src="{% static 'image/ISFP.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'ISTJ' %}
+                            <img src="{% static 'image/ISTJ.png' %}" alt="">
+                            {% endif %}
+                            {% if post.manager.profile.mbti == 'ISTP' %}
+                            <img src="{% static 'image/ISTP.png' %}" alt="">
+                            {% endif %}
+                        </div>
+                        <div id="post_item">
+                            <b>{{post.title}}</b>
+                        </div>
                     </div>
                 </a>
+                <br>
+                {% endfor %}
             </div>
-            <br>
-            {% endfor %}
         </div>
+        {% endif %}
+        {% if category_posts %}
+        <br>
+        <h3 style="padding-top: 2rem !important; padding-left: 8rem !important;" }>
+            '{{c_name}}' 검색 결과
+        </h3><br>
+        <div id="category_c">
+            <div id="category_m">
+                {% for category_post in category_posts %}
+                <br>
+
+                <div id="category">
+                    <a href="{%url 'contestPost' category_post.id%}" style="text-decoration: none;">
+                        <div class="mbti">
+                            {% if category_post.manager.profile.mbti == 'ENFJ' %}
+                            <img src="{% static 'image/ENFJ.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'ENFP' %}
+                            <img src="{% static 'image/ENFP.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'ENTJ' %}
+                            <img src="{% static 'image/ENTJ.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'ENTP' %}
+                            <img src="{% static 'image/ENTP.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'ESFJ' %}
+                            <img src="{% static 'image/ESFJ.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'ESFP' %}
+                            <img src="{% static 'image/ESFP.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'ESTJ' %}
+                            <img src="{% static 'image/ESTJ.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'ESTP' %}
+                            <img src="{% static 'image/ESTP.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'INFJ' %}
+                            <img src="{% static 'image/INFJ.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'INFP' %}
+                            <img src="{% static 'image/INFP.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'INTJ' %}
+                            <img src="{% static 'image/INTJ.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'INTP' %}
+                            <img src="{% static 'image/INTP.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'ISFJ' %}
+                            <img src="{% static 'image/ISFJ.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'ISFP' %}
+                            <img src="{% static 'image/ISFP.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'ISTJ' %}
+                            <img src="{% static 'image/ISTJ.png' %}" alt="">
+                            {% endif %}
+                            {% if category_post.manager.profile.mbti == 'ISTP' %}
+                            <img src="{% static 'image/ISTP.png' %}" alt="">
+                            {% endif %}
+                        </div>
+                        <div id="category_item">
+                            <b>{{category_post.title}}</b>
+                        </div>
+                    </a>
+                </div>
+                <br>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
-
-
 </main>
 {% endblock %}
