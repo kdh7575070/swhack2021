@@ -6,6 +6,7 @@ from .models import *
 import random
 from django.http import HttpResponse
 import json
+from .mbti_chemistry import index, chemistry
 
 #C
 def create(request):
@@ -57,6 +58,15 @@ def contestPost(request, post_id):
     post = get_object_or_404(Post,pk=post_id)
     categories = Category.objects.all().filter(post = post)
 
+    # mbti 매칭률 계산
+    my_mbti = user.profile.mbti
+    writer_mbti = post.manager.profile.mbti
+
+    my_index = index[my_mbti]
+    writer_index = index[writer_mbti]
+
+    result = str(chemistry[my_index][writer_index] * 25) + "%!!"
+
     if post.likes.filter(id=user.id):
         message="좋아요취소"
     else:
@@ -65,13 +75,12 @@ def contestPost(request, post_id):
     num = post.likes.count()
     
     comments = Comment.objects.all().filter(post = post)
-    comment_num = comments.count()
 
     participate_idea = Idea.objects.filter(post = post, i_writer = user).first()
     if participate_idea is not None:
-        return render(request,'contestPost.html' ,{'post':post, 'message':message, 'comments':comments, 'categories':categories, 'participate_idea': participate_idea, 'num':num})
+        return render(request,'contestPost.html' ,{'post':post, 'message':message, 'comments':comments, 'categories':categories, 'participate_idea': participate_idea, 'num':num, 'result': result})
 
-    return render(request,'contestPost.html' ,{'post':post, 'message':message, 'comments':comments, 'categories':categories, 'num':num})
+    return render(request,'contestPost.html' ,{'post':post, 'message':message, 'comments':comments, 'categories':categories, 'num':num, 'result': result})
 
 #멘티 확인 페이지
 def hostPage(request):
