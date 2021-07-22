@@ -131,15 +131,17 @@
                     <div style="display:flex; flex-direction: column;">
                         <div>
                             {% if user.is_authenticated %}
-                            {% if post.manager != user %}
+                            {% if post.manager != user %} <!-- 게시글 작성자가 아닐 때 -->
                     
-                            <a href="{% url 'createIdea' post.id %}"><button type="button" class="btn btn-dark" id="buttons" style=" margin-right: 5px;">멘티 신청</button></a>
-                            {% if participate_idea %}
-                            <a href="{% url 'contestIdea' post.id participate_idea.id%}"><button type="button" class="btn btn-dark" id="buttons" style=" margin-right: 5px;">신청한 멘티보기</button></a>
-                            {% endif%}
+                                {% if participate_idea %}
+                                <a href="{% url 'contestIdea' post.id participate_idea.id%}"><button type="button" class="btn btn-dark" id="buttons" style=" margin-right: 5px;">신청한 멘티보기</button></a>
+                                {% else %}
+                                <a href="{% url 'createIdea' post.id %}"><button type="button" class="btn btn-dark" id="buttons" style=" margin-right: 5px;">멘티 신청</button></a>
+                                {% endif%}
+
                             {% else %}
-                            <a href="{% url 'allIdea' post.id%}"> <button type="button" class="btn btn-dark" id="buttons">신청 온 멘티 보기</button></a>
-                            <br>
+                                <a href="{% url 'allIdea' post.id%}"> <button type="button" class="btn btn-dark" id="buttons">신청 온 멘티 보기</button></a>
+                                <br>
                             {% endif %}
                             {% endif %}
                         </div>
